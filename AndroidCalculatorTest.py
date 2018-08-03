@@ -1,31 +1,38 @@
+"""
+Main test script
+"""
 from appium import webdriver
+from CalculatorPage import CalculatorPage
 import unittest
 
 class AndroidCalculatorTest(unittest.TestCase):
+    """
+    Test class, run with "python -m unittest AndroidCalculatorTest"
+    or "python -m unittest AndroidCalculatorTest.py".
+    Running simply as "python AndroidCalculatorTest.py" also works
+    as long as the following conditional (or similar) is present in the script:
+        if __name__ == '__main__':
+            suite = unittest.TestLoader().loadTestsFromTestCase(AndroidCalculatorTest)
+            unittest.TextTestRunner(verbosity=6).run(suite)
+
+    """
     def setUp(self):
-        desired_capabilities = {'automationName': 'Appium',
-                                'platformName': 'Android',
-                                'platformVersion': '7.1.1',
-                                'deviceName': 'Android Emulator',
-                                'appPackage': 'com.android.calculator2',
-                                'appActivity': 'Calculator'}
-        
-        self.driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_capabilities)
+        self.calculator_page = CalculatorPage()
 
     def test_sum(self):
-        self.driver.find_element_by_id('com.android.calculator2:id/digit_1').click()
-        self.driver.find_element_by_id('com.android.calculator2:id/op_add').click()
-        self.driver.find_element_by_id('com.android.calculator2:id/digit_2').click()
-        self.assertEqual(self.driver.find_element_by_id('com.android.calculator2:id/result').text,'3')
+        self.calculator_page.press_number('1')
+        self.calculator_page.press_operation('add')
+        self.calculator_page.press_number('2')
+        self.assertEqual(self.calculator_page.get_result_text(),'3')
 
     def test_substraction(self):
-        self.driver.find_element_by_id('com.android.calculator2:id/digit_9').click()
-        self.driver.find_element_by_id('com.android.calculator2:id/op_sub').click()
-        self.driver.find_element_by_id('com.android.calculator2:id/digit_7').click()
-        self.assertEqual(self.driver.find_element_by_id('com.android.calculator2:id/result').text,'2')
+        self.calculator_page.press_number('9')
+        self.calculator_page.press_operation('sub')
+        self.calculator_page.press_number('7')
+        self.assertEqual(self.calculator_page.get_result_text(),'2')
 
     def tearDown(self):
-        self.driver.quit()
+        self.calculator_page.close_app()
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(AndroidCalculatorTest)
