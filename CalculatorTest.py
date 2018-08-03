@@ -13,7 +13,7 @@ class CalculatorTestPage(unittest.TestCase):
         self.calculator_page.press_number_nine()
         self.calculator_page.press_number_three()
 
-        self.assertEqual('116', self.calculator_page.get_result())
+        self.assertEqual('2393', self.calculator_page.get_result())
 
     def tearDown(self):
         self.calculator_page.close_app()
