@@ -1,5 +1,6 @@
 from appium import webdriver
 
+
 class CalculatorBasePage:
     def __init__(self):
         desired_capabilities = {'automationName': 'Appium',
@@ -7,8 +8,8 @@ class CalculatorBasePage:
                                 'platformVersion': '7.1.1',
                                 'deviceName': 'Android Emulator',
                                 'appPackage': 'com.android.calculator2',
-                                'appActivity': 'Calculator'}
-        
+                                'appActivity': 'com.android.calculator2.Calculator'}
+
         self.driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_capabilities)
 
     def find_element_by_id(self, locator):
